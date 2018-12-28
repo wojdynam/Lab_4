@@ -22,27 +22,38 @@ public class Lab_4 {
         // TODO code application logic here
         listaLotnisk= new ArrayList<Lotnisko>();
         listaSamolotow = new ArrayList<Samolot>();
-        for(int i=0;i<4;i++)
-        {
-            listaLotnisk.add(new Lotnisko(2));
-        }
-        for(int i=0;i<2;i++)
-        {
-           listaSamolotow.add(new Samolot(listaLotnisk));
-        }
-        for(Samolot s:listaSamolotow) 
-        {
-            s.start();
-        }
-        for(Lotnisko l:listaLotnisk)
-        {
-            //l.start();
-            
-        }
-        //poczatkowe przypisanie samolotów do lotnisk
-        listaLotnisk.get(0).obslugaSamolotu(listaSamolotow.get(0));
-        listaLotnisk.get(1).obslugaSamolotu(listaSamolotow.get(1));
-        
+      listaLotnisk.add(new Lotnisko(0,2));
+      listaLotnisk.add(new Lotnisko(1,2));
+      listaLotnisk.add(new Lotnisko(2,2));
+      listaLotnisk.add(new Lotnisko(3,2));
+      //pierwsze przypisanie samolotów do lotnisk
+      int liczbaSamolotów=2;
+      for(int i =0;i<liczbaSamolotów; i++)
+      { 
+         // int nr=-1;
+         // int licznik=0;
+         
+          listaSamolotow.add(new Samolot(listaLotnisk,i));
+          
+         
+      }
+      for(Samolot s: listaSamolotow)
+      {
+          s.start();
+      }
+      /*
+      Samolot samolot1 = new Samolot(listaLotnisk,1);
+      samolot1.ustawBiezace(listaLotnisk.get(0));
+      Samolot samolot2= new Samolot(listaLotnisk,2);
+      samolot2.ustawBiezace(listaLotnisk.get(1));
+      Samolot s3=new Samolot(listaLotnisk,3);
+      s3.ustawBiezace(listaLotnisk.get(3));
+              
+              
+              
+      samolot1.start();
+      samolot2.start();
+      s3.start();*/
        
     }
     

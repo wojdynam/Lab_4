@@ -6,46 +6,78 @@
 package lab_4;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Marcin
  */
-public class Lotnisko extends Thread {
-    private ArrayList< Boolean> listaPasStartowy;
-    private Samolot samolot;//tymczasowe dla testów
-    private ArrayList<Samolot> listasamolotow;
- 
-    public Lotnisko( int n)
-    {
-        System.out.println("tworzenie obiektu lotniska");
-        listaPasStartowy= new ArrayList<>();
-        for (int i=0;i<n;i++)
-        {
-            listaPasStartowy.add(new Boolean(false));
-        }
-    }
-    public void obslugaSamolotu(Samolot s)
-    {
-        samolot=s;
-    }
-
-    @Override
-    public void run() {
-        super.run(); //To change body of generated methods, choose Tools | Templates.
-        while(true)
-        {
-            System.out.println("lotniskooo");
-            try {
-                this.wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Lotnisko.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+public class Lotnisko  {
+    private int lotniskoId;
+  //private PasStartowy pas = new PasStartowy(1);
+  private ArrayList<PasStartowy> listaPasStartowy;
+  public Lotnisko(int k,int n)
+  {
+      lotniskoId=k;
+      listaPasStartowy = new ArrayList<PasStartowy>();
+      for(int i=0;i<n;i++ )
+      {
+          listaPasStartowy.add(new PasStartowy(i));
+      }
+      //System.out.println("budowa obiektu lotnisko z liczbą pasów = "+listaPasStartowy.size());
+  }
+  public int podajId()
+  {
+      return lotniskoId;
+  }
+  public void zwolnijPas(int i)
+  {
+      for(PasStartowy p: listaPasStartowy)
+     {
+         if(p.podajNumer()==i)
+         {
+             p.zwolnijPas();
+             System.out.println("zwalnianie pasa numer "+p.podajNumer()+"status :"+p.podajStatus()); 
+            break;
+         }
+     }
     
+  }
+ 
+  //Samolot samolot;
+  public int rezerwujPas()
+  {
+     // System.out.println("lotnisko pozwolenie lodowania");
+     // System.out.println(pas.podajStatus());
+      int numerPasa =-1;
+     for(PasStartowy p: listaPasStartowy)
+     {
+        if(!p.podajStatus())
+         {
+            p.rezerwujPas();
+            numerPasa=p.podajNumer();
+            break;
+         }
+     }
+     /* 
+      
+    if(!pas.podajStatus())  
+    {
+        pas.rezerwujPas();
+        return true;
+    }else
+    {
+        return false;
+    }*/
+    return numerPasa;
+  }
+ // @SuppressWarnings("empty-statement")
+   public  void postojSamolotu(Samolot s) throws InterruptedException
+  {
+      System.out.println("samolot parkuje "+s.samolotId);
+      
+      synchronized(s){s.wait(1000);}
+      
+      
+  }
     
     
 }
